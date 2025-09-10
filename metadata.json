@@ -1,0 +1,5 @@
+{
+  "name": "Artist Cover Image",
+  "description": "An app to generate consistent visual packs for music releases using AI.",
+  "requestFramePermissions": []
+}

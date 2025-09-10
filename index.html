@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scenora Series Pack</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="index.tsx"></script>
+<script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.19.0"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="app">
+        <header class="app-header">
+            <h1>Scenora</h1>
+            <p>Generate consistent visual assets for your creative projects.</p>
+        </header>
+        <main class="main-content">
+            <div id="input-panel" class="panel">
+                <div class="tabs">
+                    <button id="tab-series-pack" class="tab-btn active">Series Pack</button>
+                    <button id="tab-story-frames" class="tab-btn">Story Frames</button>
+                </div>
+
+                <div id="series-pack-content">
+                    <form id="prompt-form">
+                        <h2>Creative Brief</h2>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="brand">Brand / Artist</label>
+                                <input type="text" id="brand" name="brand" placeholder="e.g., Lofi Girl" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="season">Season</label>
+                                <input type="text" id="season" name="season" placeholder="e.g., Autumn" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="character">Character Description</label>
+                                <textarea id="character" name="character" rows="3" placeholder="e.g., 20s Korean female, soft eyes, medium wavy hair, headphones; companion: white Persian cat" required></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="scene">Scene / Mood</label>
+                                <textarea id="scene" name="scene" rows="3" placeholder="e.g., Sitting by a window on a rainy day, studying, calm and focused" required></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="palette">Color Palette (HEX)</label>
+                                <input type="text" id="palette" name="palette" placeholder="e.g., #4a4e69, #9a8c98, #c9ada7" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="negative-prompt">Negative Prompts</label>
+                                <input type="text" id="negative-prompt" name="negative-prompt" value="no watermark, no text artifacts, avoid hyper-real skin pores, avoid busy patterns">
+                            </div>
+                             <div class="form-group">
+                                <label for="title-ko">Title (KO)</label>
+                                <input type="text" id="title-ko" name="title-ko" placeholder="e.g., 비오는 날">
+                            </div>
+                            <div class="form-group">
+                                <label for="title-en">Title (EN)</label>
+                                <input type="text" id="title-en" name="title-en" placeholder="e.g., Rainy Day">
+                            </div>
+                        </div>
+                        <button type="submit" id="generate-btn">
+                            <span class="btn-text">Generate Pack</span>
+                        </button>
+                    </form>
+                </div>
+
+                <div id="story-frames-content" class="hidden">
+                     <form id="story-form">
+                        <h2>Story Brief</h2>
+                        <p style="font-size: 0.9rem; opacity: 0.8; margin-bottom: 1.5rem; margin-top: -1rem;">Uses the Character Description from the 'Series Pack' tab for consistency.</p>
+                        <div class="form-grid">
+                           <div class="form-group">
+                                <label for="story-brand">Brand / Artist Style</label>
+                                <input type="text" id="story-brand" name="brand" placeholder="e.g., Studio Ghibli inspired" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="story-palette">Color Palette (HEX)</label>
+                                <input type="text" id="story-palette" name="palette" placeholder="e.g., #4a4e69, #9a8c98, #c9ada7" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="story-theme">Story Theme</label>
+                                <input type="text" id="story-theme" name="story-theme" placeholder="e.g., A cat's peaceful afternoon nap" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="story-negative-prompt">Negative Prompts</label>
+                                <input type="text" id="story-negative-prompt" name="negative-prompt" value="no watermark, no text artifacts, avoid hyper-real skin pores, avoid busy patterns">
+                            </div>
+                        </div>
+                        <button type="submit" id="generate-story-btn">
+                            <span class="btn-text">Generate Story Frames</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div id="output-panel" class="panel">
+                <div id="loader" class="hidden">
+                    <div class="spinner"></div>
+                    <p>Generating your assets...<br/>This may take a moment.</p>
+                </div>
+                <div id="results-grid" class="results-grid"></div>
+                 <div id="error-message" class="hidden"></div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
