@@ -54,7 +54,11 @@
                                 <label for="palette">Color Palette (HEX)</label>
                                 <input type="text" id="palette" name="palette" placeholder="e.g., #4a4e69, #9a8c98, #c9ada7" required>
                             </div>
-                            <div class="form-group">
+                             <div class="form-group">
+                                <label for="seed">Seed <span class="tooltip-icon" title="A seed number ensures you get the same image results for the same prompt. Leave blank for a random seed.">?</span></label>
+                                <input type="number" id="seed" name="seed" placeholder="e.g., 42">
+                            </div>
+                            <div class="form-group full-width">
                                 <label for="negative-prompt">Negative Prompts</label>
                                 <input type="text" id="negative-prompt" name="negative-prompt" value="no watermark, no text artifacts, avoid hyper-real skin pores, avoid busy patterns">
                             </div>
@@ -86,9 +90,29 @@
                                 <label for="story-palette">Color Palette (HEX)</label>
                                 <input type="text" id="story-palette" name="palette" placeholder="e.g., #4a4e69, #9a8c98, #c9ada7" required>
                             </div>
+                             <div class="form-group">
+                                <label for="story-seed">Seed <span class="tooltip-icon" title="A seed number ensures you get the same image results for the same prompt. Leave blank for a random seed.">?</span></label>
+                                <input type="number" id="story-seed" name="seed" placeholder="e.g., 42">
+                            </div>
+                            <div class="form-group">
+                                <!-- empty placeholder for grid alignment -->
+                            </div>
                             <div class="form-group full-width">
                                 <label for="story-theme">Story Theme</label>
                                 <input type="text" id="story-theme" name="story-theme" placeholder="e.g., A cat's peaceful afternoon nap" required>
+                            </div>
+                            <div class="form-group full-width">
+                                <label>Aspect Ratio</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="story-aspect-ratio" value="16:9" checked>
+                                        <span>Landscape (16:9)</span>
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="story-aspect-ratio" value="9:16">
+                                        <span>Portrait (9:16)</span>
+                                    </label>
+                                </div>
                             </div>
                             <div class="form-group full-width">
                                 <label for="story-negative-prompt">Negative Prompts</label>

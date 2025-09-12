@@ -76,6 +76,7 @@ class ScenoraApp {
             title_ko: formData.get('title-ko') as string,
             title_en: formData.get('title-en') as string,
             negative: formData.get('negative-prompt') as string,
+            seed: formData.get('seed') as string,
         };
 
         try {
@@ -87,18 +88,24 @@ class ScenoraApp {
                 { ratio: '16:9', label: 'Thumbnail' },
                 { ratio: '9:16', label: 'Shorts Cover' }
             ];
+            
+            const seed = inputs.seed ? parseInt(inputs.seed, 10) : undefined;
 
-            const imagePromises = aspectRatios.map(ar => 
-                this.ai.models.generateImages({
+            const imagePromises = aspectRatios.map(ar => {
+                const config: any = {
+                    numberOfImages: 1,
+                    outputMimeType: 'image/png',
+                    aspectRatio: ar.ratio as '1:1' | '16:9' | '9:16',
+                };
+                 if (seed !== undefined && !isNaN(seed)) {
+                    config.seed = seed;
+                }
+                return this.ai.models.generateImages({
                     model: 'imagen-4.0-generate-001',
                     prompt: finalPrompt,
-                    config: {
-                        numberOfImages: 1,
-                        outputMimeType: 'image/png',
-                        aspectRatio: ar.ratio as '1:1' | '16:9' | '9:16',
-                    }
-                })
-            );
+                    config: config
+                });
+            });
 
             const imageResults = await Promise.all(imagePromises);
             
@@ -136,6 +143,9 @@ class ScenoraApp {
     
         const formData = new FormData(this.storyForm);
         const theme = formData.get('story-theme') as string;
+        const aspectRatio = formData.get('story-aspect-ratio') as '16:9' | '9:16';
+        const seedValue = formData.get('seed') as string;
+        const seed = seedValue ? parseInt(seedValue, 10) : undefined;
     
         // Get character from Series Pack form for consistency
         const characterDescription = (document.getElementById('character') as HTMLTextAreaElement).value;
@@ -170,14 +180,19 @@ class ScenoraApp {
             
             const imagePromises = storyCuts.map(cut => {
                 const finalPrompt = `${visualBrief}. Scene: ${cut}. ${inputs.negative}`;
+                const config: any = {
+                    numberOfImages: 1,
+                    outputMimeType: 'image/png',
+                    aspectRatio: aspectRatio,
+                };
+                if (seed !== undefined && !isNaN(seed)) {
+                    config.seed = seed;
+                }
+
                 return this.ai.models.generateImages({
                     model: 'imagen-4.0-generate-001',
                     prompt: finalPrompt,
-                    config: {
-                        numberOfImages: 1,
-                        outputMimeType: 'image/png',
-                        aspectRatio: '16:9',
-                    }
+                    config: config
                 });
             });
     
