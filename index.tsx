@@ -111,8 +111,13 @@ class ScenoraApp {
             
             this.resultsGrid.innerHTML = '';
             imageResults.forEach((response, index) => {
-                const image = response.generatedImages[0];
-                this.displayImage(image.image.imageBytes, aspectRatios[index].label, index * 100);
+                if (response.generatedImages && response.generatedImages.length > 0) {
+                    const image = response.generatedImages[0];
+                    // FIX: Correctly access the image data from `image.image.imageBytes`
+                    this.displayImage(image.image.imageBytes, aspectRatios[index].label, index * 100);
+                } else {
+                    console.warn(`No image generated for aspect ratio: ${aspectRatios[index].label}`);
+                }
             });
 
         } catch (error) {
@@ -202,6 +207,7 @@ class ScenoraApp {
             imageResults.forEach((response, index) => {
                 if (response.generatedImages && response.generatedImages.length > 0) {
                     const image = response.generatedImages[0];
+                    // FIX: Correctly access the image data from `image.image.imageBytes`
                     this.displayImage(image.image.imageBytes, `Frame ${index + 1}`, index * 100);
                 } else {
                      console.warn(`No image generated for Frame ${index + 1}`);
